@@ -1,3 +1,19 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://my-secure-proxied-dashboard.com/$1",
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "set",
+          "target": {
+            "key": "x-using-vercel-cdn"
+          },
+          "args": "@x-using-vercel-cdn-secret"
+        }
+      ]
+    }
+  ]
 }
